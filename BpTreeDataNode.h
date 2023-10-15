@@ -2,9 +2,9 @@
 #define _BpTreeDataNode_H_
 
 #include "BpTreeNode.h"
+#include <map>
 
-class BpTreeDataNode : public BpTreeNode
-{
+class BpTreeDataNode : public BpTreeNode {
 private:
 	map <string, LoanBookData*> mapData;
 	BpTreeNode* pNext;
