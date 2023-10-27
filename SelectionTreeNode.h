@@ -2,8 +2,7 @@
 #include "LoanBookData.h"
 #include "LoanBookHeap.h"
 
-class SelectionTreeNode 
-{
+class SelectionTreeNode {
 private:
     LoanBookData* pData;
     SelectionTreeNode* pLeft;
@@ -31,11 +30,11 @@ public:
 
     // function to output heap data stored in LoanBookHeap according to book classification code
     LoanBookHeapNode* deepCopy(LoanBookHeapNode* root) {
-        if (root == NULL) return nullptr;
+        if (root == NULL) return NULL;
 
-        LoanBookHeapNode* copy = new LoanBookHeapNode();
-        copy->getLeftChild() = deepCopy(root->getLeftChild())
-        copy->getRightChild() = deepCopy(root->getLeftChild())
+        LoanBookHeapNode* copy = new LoanBookHeapNode;
+        copy->setLeftChild(deepCopy(root->getLeftChild()));
+        copy->setRightChild(deepCopy(root->getLeftChild()));
 
         return copy;
     } 
@@ -44,5 +43,6 @@ public:
     SelectionTreeNode* getLeftChild() { return pLeft; }
     SelectionTreeNode* getRightChild() { return pRight; }
     SelectionTreeNode* getParent() { return pParent; }
-    LoanBookHeap* getHeap() { return hNode; }
-}
+    LoanBookHeap* getHeap() { return hRoot; }
+
+};

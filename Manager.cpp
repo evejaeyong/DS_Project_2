@@ -53,14 +53,14 @@ bool Manager::DELETE()
 }
 
 void Manager::printErrorCode(int n) {				//ERROR CODE PRINT
-	flog << "=======================" << endl;
-	flog << "ERROR " << n << << endl;
-	flog << "=======================" << endl << endl;
+	flog << "=======================" << "\n";
+	flog << "ERROR " << n << "\n";
+	flog << "=======================" << "\n\n";
 }
 
-void Manager::printSuccessCode() {//SUCCESS CODE PRINT 
-	flog << "=======================" << endl;
-	flog << "Success" << endl;
-	flog << "=======================" << endl << endl;
+void Manager::printSuccessCode() {					//SUCCESS CODE PRINT 
+	flog << "=======================" << "\n";
+	flog << "Success" << "\n";
+	flog << "=======================" << "\n\n";
 }
 

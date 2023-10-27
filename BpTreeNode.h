@@ -1,8 +1,7 @@
 #pragma once
 #include "LoanBookData.h"
 
-class BpTreeNode
-{
+class BpTreeNode {
 private:
 	BpTreeNode* pParent;
 	BpTreeNode* pMostLeftChild;

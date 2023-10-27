@@ -4,8 +4,7 @@
 #include<cstring>
 using namespace std;
 
-class LoanBookData
-{
+class LoanBookData {
 private:
     string name;
     int code;
@@ -19,7 +18,7 @@ public:
 
     void setBookData(string name, int code, string author, int year) {
         this->name = name;
-        this->code = code
+        this->code = code;
         this->author = author;
         this->year = year;
     }

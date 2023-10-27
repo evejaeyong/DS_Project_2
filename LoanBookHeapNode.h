@@ -1,8 +1,7 @@
 #pragma once
 #include "LoanBookData.h"
 
-class LoanBookHeapNode 
-{
+class LoanBookHeapNode {
 private:
     LoanBookData* pData;
     LoanBookHeapNode* pLeft;
@@ -29,4 +28,4 @@ public:
     LoanBookHeapNode* getLeftChild() { return pLeft; }
     LoanBookHeapNode* getRightChild() { return pRight; }
     LoanBookHeapNode* getParent() { return pParent; }
-}
+};
