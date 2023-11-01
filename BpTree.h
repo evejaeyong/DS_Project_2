@@ -10,7 +10,7 @@
 class BpTree {
 private:
 	BpTreeNode* root;
-	int			order;		// m children
+	int	order;		// m children
 	ofstream* fout;
 public:
 	BpTree(ofstream *fout, int order = 3) {

@@ -1,7 +1,8 @@
 #pragma once
 
 #include<iostream>
-#include<cstring>
+#include<string>
+
 using namespace std;
 
 class LoanBookData {

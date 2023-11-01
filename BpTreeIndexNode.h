@@ -2,7 +2,8 @@
 #define _BPTREEINDEXNODE_H_
 
 #include "BpTreeNode.h"
-//template <class T>
+#include <map>
+
 class BpTreeIndexNode : public BpTreeNode {
 private:
 	map <string, BpTreeNode*> mapIndex;
