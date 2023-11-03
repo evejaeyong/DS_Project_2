@@ -98,12 +98,41 @@ void BpTree::splitDataNode(BpTreeNode* pDataNode) {
 
 		if (excessIndexNode(IndexNode)) splitIndexNode(IndexNode);
 	}
-	
+
 	return;
 }
 
 void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
-	
+	BpTreeNode* newIndexChild = new BpTreeIndexNode;
+
+	while (newIndexChild->getIndexMap()->size() != order / 2) {	//Split Child Node
+		string first = pIndexNode->getIndexMap()->begin()->first;
+		BpTreeNode* second = pIndexNode->getIndexMap()->begin()->second;
+		pIndexNode->getIndexMap()->erase(first);
+		newIndexChild->insertIndexMap(first, second);
+	}
+
+	if (pIndexNode->getParent() == NULL) {						//new Parant Index Node Construct
+		BpTreeNode* newIndexParant = new BpTreeIndexNode;
+		newIndexParant->setMostLeftChild(newIndexChild);
+		newIndexChild->setParent(newIndexParant);
+		pIndexNode->setParent(newIndexChild);
+
+		string first = pIndexNode->getIndexMap()->begin()->first;
+		newIndexParant->insertIndexMap(first, pIndexNode);
+	}
+	else {														//if Parant Index node already exists
+		BpTreeNode* IndexParant = pIndexNode->getParent();
+		if (IndexParant->getMostLeftChild() == pIndexNode) IndexParant->setMostLeftChild(newIndexChild);
+
+		string first = pIndexNode->getIndexMap()->begin()->first;
+		IndexParant->insertIndexMap(first, pIndexNode);
+
+		if (excessIndexNode(IndexParant)) splitIndexNode(IndexParant);
+	}
+
+	return;
+
 }
 
 BpTreeNode* BpTree::searchDataNode(string name) {
@@ -122,7 +151,7 @@ BpTreeNode* BpTree::searchDataNode(string name) {
 			pCur = next;							//set next
 		}
 	}
-	if (pCur->getDataMap()->find(name) == pCur->getDataMap()->end()) {
+	if (pCur->getDataMap()->find(name) == pCur->getDataMap()->end()) {	//if Can't Find
 		return NULL;
 	}
 
@@ -146,7 +175,7 @@ bool BpTree::searchBook(string name) {
 		}
 	}
 	if (pCur->getDataMap()->find(name) != pCur->getDataMap()->end()) {	//if find name
-		fout->open("log.txt");
+		fout->open("log.txt", ios::app);
 		LoanBookData* data = pCur->getDataMap()->find(name)->second;
 		*fout << "========SEARCH_BP========\n";
 		*fout << data->getName() << "/" << data->getCode() << "/" << data->getAuthor() << "/" << data->getYear() << "/" << data->getLoanCount() <<"\n";
@@ -159,6 +188,7 @@ bool BpTree::searchBook(string name) {
 
 bool BpTree::searchRange(string start, string end) {
 	BpTreeNode* pCur = root;
+	bool check = false;
 	while (pCur->getMostLeftChild()) {				//while Find DataNode
 		if (pCur->getIndexMap()->begin()->first > start) {
 			pCur = pCur->getMostLeftChild();		//if name is small
@@ -173,8 +203,48 @@ bool BpTree::searchRange(string start, string end) {
 			pCur = next;							//set next
 		}
 	}
-	//이제 범위지정이 필요함
 
+	fout->open("log.txt", ios::app);
+	*fout << "========SEARCH_BP========\n";
+	bool check = false;
+	while (pCur != NULL) {
+		for (auto iter : *pCur->getDataMap()) {
+			if (iter.first >= start && iter.first <= end) {		//Outputting data in range
+				*fout << iter.second->getName() << "/" << iter.second->getCode() << "/" << iter.second->getAuthor() << "/" 
+				<< iter.second->getYear() << "/" << iter.second->getLoanCount() <<"\n";
+			}
+			if (iter.first > end) check = true;				//When the string exceeds end
+		}
+		if (check) break;
+	}
+
+	*fout << "==========================\n\n";
+	fout->close();
+}
+
+bool BpTree::PrintBook() {
+	if (root = NULL) return false;				//if Tree Doesn't have node, return false
+	else {
+		BpTreeNode* Print = root;
+		
+		while (Print->getMostLeftChild()) {		//go to list's First Node
+			Print = Print->getMostLeftChild();
+		}
+
+		fout->open("log.txt", ios::app);
+		*fout << "========PRINT_BP========\n";
+		while (Print != NULL) {							//Print All Node
+			for (auto iter : *Print->getDataMap()) {	//Print All map's Value
+				*fout << iter.second->getName() << "/" << iter.second->getCode() << "/" << iter.second->getAuthor() << "/" 
+				<< iter.second->getYear() << "/" << iter.second->getLoanCount() <<"\n";
+			}
+			Print = Print->getNext();					//go to next node
+		}
+		
+		*fout << "========================\n\n";
+		fout->close();
+		return true;
+	}
 }
 
 void BpTree::DeleteData(string name) {

@@ -2,17 +2,18 @@
 #include "SelectionTree.h"
 #include "BpTree.h"
 
-class Manager
-{
+class Manager {
 private:
 	char* cmd;
 	BpTree* bptree;
 	SelectionTree* stree;
-	BpTree* bptree;
+	
 public:
 	Manager(int bpOrder)	//constructor
 	{
-		/* You must fill here */
+		bptree = new BpTree(&flog, bpOrder);
+		stree = new SelectionTree(&flog);
+
 	}
 
 
@@ -38,7 +39,7 @@ public:
 	bool DELETE();
 
 	void printErrorCode(int n);
-	void printSuccessCode();
+	void printSuccessCode(string success);
 
 };
 
