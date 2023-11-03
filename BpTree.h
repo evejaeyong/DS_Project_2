@@ -4,6 +4,7 @@
 #include "BpTreeDataNode.h"
 #include "BpTreeIndexNode.h"
 #include "LoanBookData.h"
+#include "SelectionTree.h"
 #include <fstream>
 #include <iostream>
 
@@ -12,6 +13,8 @@ private:
 	BpTreeNode* root;
 	int	order;		// m children
 	ofstream* fout;
+	SelectionTree* stree;
+
 public:
 	BpTree(ofstream *fout, int order = 3) {
 		root = NULL;
@@ -30,9 +33,10 @@ public:
 
 	bool searchBook(string name);
 	bool searchRange(string start, string end);
-	void DeleteData(string name);
 
+	void SetSTree(SelectionTree* stree) { this->stree = stree; }
 	bool PrintBook();
+	void DeleteData(string name);
 };
 
 #endif

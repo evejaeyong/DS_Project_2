@@ -22,6 +22,8 @@ public:
 
     }
 
+    void HeapInit() { this->hRoot = new LoanBookHeap; }
+
     void setBookData(LoanBookData* data) { this->pData = data; }
     void setLeftChild(SelectionTreeNode* pL) { this->pLeft = pL; }
     void setRightChild(SelectionTreeNode* pR) { this->pRight = pR; }

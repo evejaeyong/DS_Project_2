@@ -248,5 +248,11 @@ bool BpTree::PrintBook() {
 }
 
 void BpTree::DeleteData(string name) {
+	BpTreeNode* delNode = searchDataNode(name);
+	LoanBookData* data = delNode->getDataMap()->find(name)->second;
+	delNode->getDataMap()->erase(name);
+	//딜리트 전체 추가해야 함
 
+
+	stree->Insert(data);
 }
