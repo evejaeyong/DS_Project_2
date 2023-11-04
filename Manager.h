@@ -9,17 +9,17 @@ private:
 	SelectionTree* stree;
 	
 public:
-	Manager(int bpOrder)	//constructor
-	{
+	Manager(int bpOrder) {		//constructor
+		flog.open("log.txt");
 		bptree = new BpTree(&flog, bpOrder);
 		stree = new SelectionTree(&flog);
-
 	}
 
 
-	~Manager()//destructor
-	{
-		/* You must fill here */
+	~Manager() {				//destructor
+		flog.close();
+		delete bptree;
+		delete stree;
 	}
 
 	ifstream fin;

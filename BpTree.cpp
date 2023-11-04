@@ -175,12 +175,10 @@ bool BpTree::searchBook(string name) {
 		}
 	}
 	if (pCur->getDataMap()->find(name) != pCur->getDataMap()->end()) {	//if find name
-		fout->open("log.txt", ios::app);
 		LoanBookData* data = pCur->getDataMap()->find(name)->second;
 		*fout << "========SEARCH_BP========\n";
 		*fout << data->getName() << "/" << data->getCode() << "/" << data->getAuthor() << "/" << data->getYear() << "/" << data->getLoanCount() <<"\n";
 		*fout << "==========================\n\n";
-		fout->close();
 		return true;
 	}
 	else return false;	
@@ -204,7 +202,6 @@ bool BpTree::searchRange(string start, string end) {
 		}
 	}
 
-	fout->open("log.txt", ios::app);
 	*fout << "========SEARCH_BP========\n";
 	bool check = false;
 	while (pCur != NULL) {
@@ -219,7 +216,6 @@ bool BpTree::searchRange(string start, string end) {
 	}
 
 	*fout << "==========================\n\n";
-	fout->close();
 }
 
 bool BpTree::PrintBook() {
@@ -231,7 +227,6 @@ bool BpTree::PrintBook() {
 			Print = Print->getMostLeftChild();
 		}
 
-		fout->open("log.txt", ios::app);
 		*fout << "========PRINT_BP========\n";
 		while (Print != NULL) {							//Print All Node
 			for (auto iter : *Print->getDataMap()) {	//Print All map's Value
@@ -242,7 +237,6 @@ bool BpTree::PrintBook() {
 		}
 		
 		*fout << "========================\n\n";
-		fout->close();
 		return true;
 	}
 }
