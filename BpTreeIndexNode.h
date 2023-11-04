@@ -9,10 +9,10 @@ private:
 	map <string, BpTreeNode*> mapIndex;
 
 public:
-	BpTreeIndexNode() {};
+	BpTreeIndexNode() {}
 	~BpTreeIndexNode() {
 
-	};
+	}
 
 
 	void insertIndexMap(string name, BpTreeNode* pN) {

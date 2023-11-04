@@ -13,7 +13,7 @@ void Manager::run(const char* command) {
 			if (cmd == "LOAD") LOAD();
 			else if (cmd == "ADD") ADD();
 			else if (cmd == "SEARCH_BP") {
-				
+				//여기 질문 답변 온 후에 구현해야 함
 			}
 			else if (cmd == "PRINT_BP") PRINT_BP();
 			else if (cmd == "PRINT_ST") PRINT_ST();
@@ -79,10 +79,10 @@ bool Manager::LOAD() {
             
 			LoanBookData* newNode = new LoanBookData;
 			newNode->setBookData(name, code, author, year);
-			for (int i = 0; i <= loan_count; i++) {
+			for (int i = 0; i < loan_count; i++) {
 				newNode->updateCount();
 			}
-			bptree->Insert(newNode);
+			bptree->Insert(newNode);			 //insert to bp tree
         }
 		printSuccessCode("LOAD");
     }
@@ -136,13 +136,13 @@ bool Manager::ADD() {
             
 	LoanBookData* newNode = new LoanBookData;
 	newNode->setBookData(name, code, author, year);
-	bptree->Insert(newNode);
+	bptree->Insert(newNode);			 //insert to bp tree
 
 	return true;
 }
 
 bool Manager::SEARCH_BP_BOOK(string book) {
-	if (!bptree->searchBook(book)) {
+	if (!bptree->searchBook(book)) {	//if Book Search Failed
 		printErrorCode(300);
 		return false;
 	}
@@ -150,7 +150,7 @@ bool Manager::SEARCH_BP_BOOK(string book) {
 }
 
 bool Manager::SEARCH_BP_RANGE(string s, string e) {
-	if (!bptree->searchRange(s, e)) {
+	if (!bptree->searchRange(s, e)) {	//if Book Search Failed
 		printErrorCode(300);
 		return false;
 	}
@@ -158,7 +158,7 @@ bool Manager::SEARCH_BP_RANGE(string s, string e) {
 }
 
 bool Manager::PRINT_BP() {
-	if (!bptree->PrintBook()) {
+	if (!bptree->PrintBook()) {			//if Data can't find
 		printErrorCode(400);
 		return false;
 	}
@@ -182,6 +182,6 @@ void Manager::printErrorCode(int n) {				//ERROR CODE PRINT
 void Manager::printSuccessCode(string success) {	//SUCCESS CODE PRINT 
 	flog << "========"<< success << "========\n";
 	flog << "Success" << "\n";
-	flog << "========================\n\n";
+	flog << "====================\n\n";
 }
 

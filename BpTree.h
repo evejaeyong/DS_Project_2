@@ -7,6 +7,7 @@
 #include "SelectionTree.h"
 #include <fstream>
 #include <iostream>
+using namespace std;
 
 class BpTree {
 private:
@@ -21,7 +22,9 @@ public:
 		this->order = order;
 		this->fout = fout;
 	}
-	~BpTree();
+	~BpTree() {
+		
+	}
 	/* essential */
 	bool		Insert(LoanBookData* newData);
 	bool		excessDataNode(BpTreeNode* pDataNode);

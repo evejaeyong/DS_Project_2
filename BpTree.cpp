@@ -4,9 +4,8 @@ bool BpTree::Insert(LoanBookData* newData) {
 	string name = newData->getName();
 	BpTreeNode* node;
 	if (root == NULL) {						//if root is NULL
-		node = new BpTreeDataNode;
-		node->insertDataMap(name, newData);	//Data Insert and set Root
-		root = node;
+		root = new BpTreeDataNode;
+		root->insertDataMap(name, newData);	//Data Insert and set Root
 		return true;
 	}
 
@@ -68,15 +67,15 @@ bool BpTree::excessIndexNode(BpTreeNode* pIndexNode) {
 
 void BpTree::splitDataNode(BpTreeNode* pDataNode) {
 	BpTreeNode* newDataNode = new BpTreeDataNode;
-
 	newDataNode->setNext(pDataNode);					//set DataNode Prev, Next
 	newDataNode->setPrev(pDataNode->getPrev());
+	if (pDataNode->getPrev()) pDataNode->getPrev()->setNext(newDataNode);
 	pDataNode->setPrev(newDataNode);
-
-	while (newDataNode->getDataMap()->size() != order / 2) {	//Split Data Node
+	
+	while (newDataNode->getDataMap()->size() < order / 2) {		//Split Data Node
 		string first = pDataNode->getDataMap()->begin()->first;
 		LoanBookData* second = pDataNode->getDataMap()->begin()->second;
-		pDataNode->getDataMap()->erase(first);
+		pDataNode->deleteMap(first);
 		newDataNode->insertDataMap(first, second);
 	}
 
@@ -88,6 +87,7 @@ void BpTree::splitDataNode(BpTreeNode* pDataNode) {
 
 		string first = pDataNode->getDataMap()->begin()->first;
 		newIndexNode->insertIndexMap(first, pDataNode);
+		if (pDataNode == root) root = newIndexNode;
 	}
 	else {														//Index node already exists
 		BpTreeNode* IndexNode = pDataNode->getParent();
@@ -105,10 +105,10 @@ void BpTree::splitDataNode(BpTreeNode* pDataNode) {
 void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
 	BpTreeNode* newIndexChild = new BpTreeIndexNode;
 
-	while (newIndexChild->getIndexMap()->size() != order / 2) {	//Split Child Node
+	while (newIndexChild->getIndexMap()->size() < order / 2) {	//Split Child Node
 		string first = pIndexNode->getIndexMap()->begin()->first;
 		BpTreeNode* second = pIndexNode->getIndexMap()->begin()->second;
-		pIndexNode->getIndexMap()->erase(first);
+		pIndexNode->deleteMap(first);
 		newIndexChild->insertIndexMap(first, second);
 	}
 
@@ -116,10 +116,14 @@ void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
 		BpTreeNode* newIndexParant = new BpTreeIndexNode;
 		newIndexParant->setMostLeftChild(newIndexChild);
 		newIndexChild->setParent(newIndexParant);
-		pIndexNode->setParent(newIndexChild);
+		newIndexChild->setMostLeftChild(pIndexNode->getMostLeftChild());
+		pIndexNode->setMostLeftChild(pIndexNode->getIndexMap()->begin()->second);
+		pIndexNode->setParent(newIndexParant);
 
 		string first = pIndexNode->getIndexMap()->begin()->first;
 		newIndexParant->insertIndexMap(first, pIndexNode);
+		pIndexNode->deleteMap(first);
+		if (pIndexNode == root) root = newIndexParant;
 	}
 	else {														//if Parant Index node already exists
 		BpTreeNode* IndexParant = pIndexNode->getParent();
@@ -127,6 +131,7 @@ void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
 
 		string first = pIndexNode->getIndexMap()->begin()->first;
 		IndexParant->insertIndexMap(first, pIndexNode);
+		pIndexNode->deleteMap(first);
 
 		if (excessIndexNode(IndexParant)) splitIndexNode(IndexParant);
 	}
@@ -177,7 +182,9 @@ bool BpTree::searchBook(string name) {
 	if (pCur->getDataMap()->find(name) != pCur->getDataMap()->end()) {	//if find name
 		LoanBookData* data = pCur->getDataMap()->find(name)->second;
 		*fout << "========SEARCH_BP========\n";
-		*fout << data->getName() << "/" << data->getCode() << "/" << data->getAuthor() << "/" << data->getYear() << "/" << data->getLoanCount() <<"\n";
+		*fout << data->getName() << "/";
+		if (data->getCode() == 0) *fout << "00";
+		*fout << data->getCode() << "/" << data->getAuthor() << "/" << data->getYear() << "/" << data->getLoanCount() <<"\n";
 		*fout << "==========================\n\n";
 		return true;
 	}
@@ -203,11 +210,12 @@ bool BpTree::searchRange(string start, string end) {
 	}
 
 	*fout << "========SEARCH_BP========\n";
-	bool check = false;
 	while (pCur != NULL) {
 		for (auto iter : *pCur->getDataMap()) {
 			if (iter.first >= start && iter.first <= end) {		//Outputting data in range
-				*fout << iter.second->getName() << "/" << iter.second->getCode() << "/" << iter.second->getAuthor() << "/" 
+				*fout << iter.second->getName() << "/";
+				if (iter.second->getCode() == 0) *fout << "00";
+				*fout << iter.second->getCode() << "/" << iter.second->getAuthor() << "/" 
 				<< iter.second->getYear() << "/" << iter.second->getLoanCount() <<"\n";
 			}
 			if (iter.first > end) check = true;				//When the string exceeds end
@@ -219,23 +227,22 @@ bool BpTree::searchRange(string start, string end) {
 }
 
 bool BpTree::PrintBook() {
-	if (root = NULL) return false;				//if Tree Doesn't have node, return false
+	if (root == NULL) return false;				//if Tree Doesn't have node, return false
 	else {
 		BpTreeNode* Print = root;
-		
 		while (Print->getMostLeftChild()) {		//go to list's First Node
 			Print = Print->getMostLeftChild();
 		}
-
 		*fout << "========PRINT_BP========\n";
 		while (Print != NULL) {							//Print All Node
 			for (auto iter : *Print->getDataMap()) {	//Print All map's Value
-				*fout << iter.second->getName() << "/" << iter.second->getCode() << "/" << iter.second->getAuthor() << "/" 
+				*fout << iter.second->getName() << "/";
+				if (iter.second->getCode() == 0) *fout << "00";
+				*fout << iter.second->getCode() << "/" << iter.second->getAuthor() << "/" 
 				<< iter.second->getYear() << "/" << iter.second->getLoanCount() <<"\n";
 			}
 			Print = Print->getNext();					//go to next node
 		}
-		
 		*fout << "========================\n\n";
 		return true;
 	}
