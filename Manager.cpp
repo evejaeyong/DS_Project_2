@@ -14,6 +14,9 @@ void Manager::run(const char* command) {
 			else if (cmd == "ADD") ADD();
 			else if (cmd == "SEARCH_BP") {
 				//여기 질문 답변 온 후에 구현해야 함
+				string book;
+				fin >> book;
+				SEARCH_BP_BOOK(book);
 			}
 			else if (cmd == "PRINT_BP") PRINT_BP();
 			else if (cmd == "PRINT_ST") PRINT_ST();
@@ -176,7 +179,7 @@ bool Manager::DELETE() {
 void Manager::printErrorCode(int n) {				//ERROR CODE PRINT
 	flog << "========ERROR========\n";
 	flog << n << "\n";
-	flog << "======================\n\n";
+	flog << "=====================\n\n";
 }
 
 void Manager::printSuccessCode(string success) {	//SUCCESS CODE PRINT 
