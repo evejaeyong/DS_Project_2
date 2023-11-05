@@ -21,4 +21,5 @@ public:
     void heapifyDown(LoanBookHeapNode* pN);
     
     bool Insert(LoanBookData* data);
+    LoanBookData* Delete();
 };

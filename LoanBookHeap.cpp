@@ -11,3 +11,7 @@ void LoanBookHeap::heapifyDown(LoanBookHeapNode* pN) {
 bool LoanBookHeap::Insert(LoanBookData* data) {
     
 }
+
+LoanBookData* LoanBookHeap::Delete() {
+
+}

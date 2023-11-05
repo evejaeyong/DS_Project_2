@@ -1,4 +1,5 @@
 #include "SelectionTree.h"
+#include <queue>
 
 void SelectionTree::setTree() {
     for (int i = 0; i < 8; i++) {           //setting run
@@ -51,20 +52,84 @@ void SelectionTree::setTree() {
 }
 
 bool SelectionTree::Insert(LoanBookData* newData) {
-    run[newData->getCode() / 100]->getHeap()->Insert(newData);
+    run[newData->getCode() / 100]->getHeap()->Insert(newData);  //heap insert
 
-    
+    if (run[newData->getCode() / 100]->getHeap()->getRoot()->getBookData() == newData) {
+        SelectionTreeNode* Parant = run[newData->getCode() / 100]->getParent();
+        while (Parant) {                                        //Compare
+            if (Parant->getBookData() == NULL) {
+                Parant->setBookData(newData);
+            }
+            else if (Parant->getBookData()->getName() > newData->getName()) {
+                Parant->setBookData(newData);
+            }
+            else break;
+            Parant = Parant->getParent();
+        }
+    }
+    return true;
 }
 
 bool SelectionTree::Delete() {
-    if (root->getBookData() == NULL) {
+    if (root->getBookData() == NULL) {          //if Selection Tree doesn't have Data
         return false;   
     }
     else {
-        
+        string name = root->getBookData()->getName();
+        SelectionTreeNode* node = root;
+        node->setBookData(NULL);
+        while (node) {                          //Search while leaf Node
+            if (node->getLeftChild()->getBookData()->getName() == name) node = node->getLeftChild();
+            else node = node->getRightChild();
+
+            node->setBookData(NULL);
+
+            if (node->getHeap()) {              //Heap Delete
+                node->getHeap()->Delete();
+                node->setBookData(node->getHeap()->getRoot()->getBookData());
+
+                SelectionTreeNode* Parant = node->getParent();
+
+                while (Parant) {                //Selection Tree rearrangement
+                    SelectionTreeNode* Left = Parant->getLeftChild();
+                    SelectionTreeNode* Right = Parant->getRightChild();
+
+                    if (Left->getBookData() == NULL) Parant->setBookData(Right->getBookData());
+                    else if (Right->getBookData() == NULL) Parant->setBookData(Left->getBookData());
+                    else if (Left->getBookData()->getName() > Right->getBookData()->getName()) Parant->setBookData(Right->getBookData());
+                    else Parant->setBookData(Left->getBookData());
+
+                    Parant = Parant->getParent();
+                }
+                break;
+            }
+        }
+        return true;
     }
 }
 
 bool SelectionTree::printBookData(int bookCode) {
-    run[bookCode / 100]->getHeap();
+    LoanBookHeap* Print = run[bookCode / 100]->getHeap();
+    queue<LoanBookData*> q;
+
+    if (Print->getRoot() == NULL) return false;         //if Heap doesn't have data
+    else {
+        *fout << "========PRINT_ST========\n";          //Print Data
+        while (Print->getRoot()) {
+            LoanBookData* PopData = Print->Delete();
+            q.push(PopData);                            //Heap Data Push to Queue
+
+            *fout << PopData->getName() << "/";
+            if (PopData->getCode() == 0) *fout << "00";
+            *fout << PopData->getCode() << "/" << PopData->getAuthor() << "/" << 
+            PopData->getYear() << "/" << PopData->getLoanCount() << "\n";
+        }
+        *fout << "========================\n\n";
+
+        while (!q.empty()) {                            //Queue Data Push to Heap
+            Print->Insert(q.front());
+            q.pop();
+        }
+        return true;
+    }
 }
