@@ -18,7 +18,7 @@ public:
     }
 
     ~SelectionTree() {
-
+        Destruct(root);
     }
 
     void setRoot(SelectionTreeNode* pN) { this->root = pN; }
@@ -29,4 +29,6 @@ public:
     bool Insert(LoanBookData* newData);
     bool Delete();
     bool printBookData(int bookCode);
+
+    void Destruct(SelectionTreeNode* node);
 };

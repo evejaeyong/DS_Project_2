@@ -133,3 +133,13 @@ bool SelectionTree::printBookData(int bookCode) {
         return true;
     }
 }
+
+void SelectionTree::Destruct(SelectionTreeNode* node) {
+    if (node == NULL) return;
+    else {
+        Destruct(node->getLeftChild());
+        Destruct(node->getRightChild());
+        delete node;
+    }
+    return;
+}

@@ -169,10 +169,27 @@ bool Manager::PRINT_BP() {
 }
 
 bool Manager::PRINT_ST() {
+	int num;
+	fin >> num;				//get Book Code
 
+	if (stree->printBookData(num)) {
+		return true;
+	}
+	else {					//if Stree Doesn't Have Data
+		printErrorCode(500);
+		return false;
+	}
 }
 
 bool Manager::DELETE() {
+	if (stree->Delete()) {
+		printSuccessCode("DELETE");
+		return true;
+	}
+	else {					//if Stree Doesn't Have Data
+		printErrorCode(600);
+		return false;
+	}
 
 }
 

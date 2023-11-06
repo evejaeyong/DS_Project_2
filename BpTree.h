@@ -22,9 +22,18 @@ public:
 		this->order = order;
 		this->fout = fout;
 	}
+	
 	~BpTree() {
-		
+		BpTreeNode* pCur = root;
+		while (pCur->getMostLeftChild()) pCur = pCur->getMostLeftChild();
+
+		BpTreeNode* del = pCur;
+		pCur = pCur->getNext();
+		while (del->getDataMap()->size()) {
+			DeleteData(del->getDataMap()->begin()->first);
+		}
 	}
+
 	/* essential */
 	bool		Insert(LoanBookData* newData);
 	bool		excessDataNode(BpTreeNode* pDataNode);

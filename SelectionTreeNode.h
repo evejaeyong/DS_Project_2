@@ -19,7 +19,7 @@ public:
         this->hRoot = NULL;
     }
     ~SelectionTreeNode() {
-
+        if (hRoot) delete hRoot;
     }
 
     void HeapInit() { this->hRoot = new LoanBookHeap; }

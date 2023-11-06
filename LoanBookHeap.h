@@ -11,7 +11,9 @@ public:
         this->root = NULL;
     }
     ~LoanBookHeap() {
-
+        while (root != NULL) {
+            Delete();
+        }
     }
     
     void setRoot(LoanBookHeapNode* pN) { this->root = pN; }
