@@ -1,29 +1,33 @@
 LOAD
 PRINT_BP
-SEARCH_BP aaaaa
-SEARCH_BP bbbbb
-SEARCH_BP ccccc
-SEARCH_BP ddddd
-SEARCH_BP eeeee
-SEARCH_BP fffff
-SEARCH_BP ggggg
-SEARCH_BP hhhhh
-SEARCH_BP iiiii
-SEARCH_BP jjjjj
-SEARCH_BP kkkkk
-SEARCH_BP lllll
-SEARCH_BP mmmmm
-SEARCH_BP nnnnn
-SEARCH_BP ooooo
-SEARCH_BP ppppp
-SEARCH_BP qqqqq
-SEARCH_BP rrrrr
-SEARCH_BP sssss
-SEARCH_BP ttttt
-SEARCH_BP uuuuu
-SEARCH_BP vvvvv
-SEARCH_BP wwwww
-SEARCH_BP xxxxx
-SEARCH_BP yyyyy
-SEARCH_BP zzzzz
+SEARCH_BP	aaaaa
+SEARCH_BP	bbbbb
+SEARCH_BP	ccccc
+SEARCH_BP	ddddd
+SEARCH_BP	eeeee
+SEARCH_BP	fffff
+SEARCH_BP	ggggg
+SEARCH_BP	hhhhh
+SEARCH_BP	iiiii
+SEARCH_BP	jjjjj
+SEARCH_BP	kkkkk
+SEARCH_BP	lllll
+SEARCH_BP	mmmmm
+SEARCH_BP	nnnnn
+SEARCH_BP	ooooo
+SEARCH_BP	ppppp
+SEARCH_BP	qqqqq
+SEARCH_BP	rrrrr
+SEARCH_BP	sssss
+SEARCH_BP	ttttt
+SEARCH_BP	uuuuu
+SEARCH_BP	vvvvv
+SEARCH_BP	wwwww
+SEARCH_BP	xxxxx
+SEARCH_BP	yyyyy
+SEARCH_BP	zzzzz
+SEARCH_BP	a	c
+SEARCH_BP	b	e
+SEARCH_BP	a	y
+SEARCH_BP	o	p
 EXIT

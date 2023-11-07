@@ -1,5 +1,4 @@
 uuuuu	600	uuu	1999	0
-ooooo	500	ooo	1999	0
 lllll	000	lll	1999	0
 kkkkk	100	kkk	1999	0
 mmmmm	600	mmm	1999	0
@@ -22,5 +21,4 @@ aaaaa	100	aaa	1999	0
 bbbbb	100	bbb	1999	0
 yyyyy	000	yyy	1999	0
 eeeee	000	eee	1999	0
-ppppp	100	ppp	1999	0
 ccccc	200	ccc	1999	0

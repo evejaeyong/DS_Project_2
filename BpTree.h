@@ -24,14 +24,7 @@ public:
 	}
 	
 	~BpTree() {
-		BpTreeNode* pCur = root;
-		while (pCur->getMostLeftChild()) pCur = pCur->getMostLeftChild();
-
-		BpTreeNode* del = pCur;
-		pCur = pCur->getNext();
-		while (del->getDataMap()->size()) {
-			DeleteData(del->getDataMap()->begin()->first);
-		}
+		//아 이거 어케 구현하지?
 	}
 
 	/* essential */

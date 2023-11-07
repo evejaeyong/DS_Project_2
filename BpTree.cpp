@@ -139,7 +139,7 @@ void BpTree::splitIndexNode(BpTreeNode* pIndexNode) {
 		newIndexChild->setMostLeftChild(pIndexNode->getMostLeftChild());
 		newIndexChild->getMostLeftChild()->setParent(newIndexChild);
 		pIndexNode->setMostLeftChild(pIndexNode->getIndexMap()->begin()->second);
-		
+
 		map<string, BpTreeNode*>* m = IndexParant->getIndexMap();
 		for (auto iter : *m) {
 			if (iter.second == pIndexNode) {
@@ -217,36 +217,45 @@ bool BpTree::searchRange(string start, string end) {
 	BpTreeNode* pCur = root;
 	bool check = false;
 	while (pCur->getMostLeftChild()) {				//while Find DataNode
-		if (pCur->getIndexMap()->begin()->first > start) {
+		if (pCur->getIndexMap()->begin()->first[0] > start[0]) {
 			pCur = pCur->getMostLeftChild();		//if name is small
 		}
 		else {										//if name is big
 			map<string, BpTreeNode*>* m = pCur->getIndexMap();
 			BpTreeNode* next = NULL;
 			for (auto iter : *m) {					//map search
-				if (iter.first > start) break;
+				if (iter.first[0] > start[0]) break;
 				next = iter.second;
 			}
 			pCur = next;							//set next
 		}
 	}
+	
+	bool ch = false;								//if no data
+	for (auto iter : *pCur->getDataMap()) {
+		if (iter.first[0] >= start[0] && iter.first[0] <= end[0]) {
+			ch = true;
+		}
+	}
+	if (!ch) return false;
 
 	*fout << "========SEARCH_BP========\n";
 	while (pCur != NULL) {
 		for (auto iter : *pCur->getDataMap()) {
-			if (iter.first >= start && iter.first <= end) {		//Outputting data in range
+			if (iter.first[0] >= start[0] && iter.first[0] <= end[0]) {		//Outputting data in range
 				*fout << iter.second->getName() << "/";
 				if (iter.second->getCode() == 0) *fout << "00";
 				*fout << iter.second->getCode() << "/" << iter.second->getAuthor() << "/"
 					<< iter.second->getYear() << "/" << iter.second->getLoanCount() << "\n";
 			}
-			if (iter.first > end) check = true;				//When the string exceeds end
+			if (iter.first[0] >= end[0]) check = true;				//When the string exceeds end
 		}
 		if (check) break;
+		pCur = pCur->getNext();
 	}
 
 	*fout << "=========================\n\n";
-	return false;
+	return true;
 }
 
 bool BpTree::PrintBook() {
