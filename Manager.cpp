@@ -66,7 +66,9 @@ bool Manager::LOAD() {
 	}
 	else {                                      //normal case
 		string line;
+		bool ch = false;
 		while (getline(fdata, line)) {          //Get one line at loan_book file
+			ch = true;
 			int len = 0;
 			string name, s_code, author, s_year, s_loan_count;
 			int code, year, loan_count;
@@ -105,7 +107,8 @@ bool Manager::LOAD() {
 			}
 			bptree->Insert(newNode);			 //insert to bp tree
 		}
-		printSuccessCode("LOAD");
+		if (ch) printSuccessCode("LOAD");
+		else printErrorCode(100);
 	}
 	fdata.close();
 	return true;
