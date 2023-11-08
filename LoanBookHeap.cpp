@@ -109,7 +109,7 @@ LoanBookData* LoanBookHeap::Delete() {
     }
     s.pop();
 
-    LoanBookHeapNode* node = root;
+    LoanBookHeapNode* node = root;                  //Get Position
     while (!s.empty()) {
         int num = s.top();
         if (num == 0) {
@@ -127,6 +127,6 @@ LoanBookData* LoanBookHeap::Delete() {
 
 void LoanBookHeap::Destruct() {
     LoanBookData* Data = Delete();
-    delete Data;
+    delete Data;                                    //Delete LoanBookData
     return;
 }

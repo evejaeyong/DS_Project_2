@@ -1,4 +1,7 @@
 LOAD
+ADD	aaaaa	100	aaa	1999
+ADD	aaaaa	100	aaa	1999
+ADD	aaaaa	100	aaa
 PRINT_BP
 SEARCH_BP	aaaaa
 SEARCH_BP	bbbbb

@@ -117,7 +117,7 @@ bool Manager::LOAD() {
 bool Manager::ADD() {
 	string line;
 	getline(fin, line);                //Get One line
-	int len = 0;
+	int len = 1;
 	string name, s_code, author, s_year;
 	int code, year;
 
@@ -161,6 +161,12 @@ bool Manager::ADD() {
 	LoanBookData* newNode = new LoanBookData;
 	newNode->setBookData(name, code, author, year);
 	bptree->Insert(newNode);			 //insert to bp tree
+
+	flog << "========ADD========\n";
+	flog << name << "/";
+	if (code == 0) flog << "00";
+	flog << code << "/" << author << "/" << year << "\n";
+	flog << "===================\n\n";
 
 	return true;
 }

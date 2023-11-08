@@ -136,7 +136,7 @@ bool SelectionTree::printBookData(int bookCode) {
 
 void SelectionTree::Destruct(SelectionTreeNode* node) {
     if (node == NULL) return;
-    else {
+    else {                                         //delete All Node
         Destruct(node->getLeftChild());
         Destruct(node->getRightChild());
         delete node;
