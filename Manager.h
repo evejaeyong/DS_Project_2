@@ -7,12 +7,13 @@ private:
 	char* cmd;
 	BpTree* bptree;
 	SelectionTree* stree;
-	
+
 public:
 	Manager(int bpOrder) {		//constructor
 		flog.open("log.txt");
 		bptree = new BpTree(&flog, bpOrder);
 		stree = new SelectionTree(&flog);
+		bptree->SetSTree(stree);
 	}
 
 
@@ -24,7 +25,6 @@ public:
 
 	ifstream fin;
 	ofstream flog;
-	
 
 	void run(const char* command);
 	bool LOAD();

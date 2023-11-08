@@ -72,21 +72,22 @@ bool SelectionTree::Insert(LoanBookData* newData) {
 
 bool SelectionTree::Delete() {
     if (root->getBookData() == NULL) {          //if Selection Tree doesn't have Data
-        return false;   
+        return false;
     }
     else {
         string name = root->getBookData()->getName();
         SelectionTreeNode* node = root;
         node->setBookData(NULL);
-        while (node) {                          //Search while leaf Node
-            if (node->getLeftChild()->getBookData()->getName() == name) node = node->getLeftChild();
+        while (!node->getHeap()) {           //Search while leaf Node
+            if (node->getLeftChild()->getBookData() == NULL) node = node->getRightChild();
+            else if (node->getLeftChild()->getBookData()->getName() == name) node = node->getLeftChild();
             else node = node->getRightChild();
 
             node->setBookData(NULL);
 
             if (node->getHeap()) {              //Heap Delete
                 node->getHeap()->Delete();
-                node->setBookData(node->getHeap()->getRoot()->getBookData());
+                if (node->getHeap()->getRoot()) node->setBookData(node->getHeap()->getRoot()->getBookData());
 
                 SelectionTreeNode* Parant = node->getParent();
 
@@ -121,8 +122,8 @@ bool SelectionTree::printBookData(int bookCode) {
 
             *fout << PopData->getName() << "/";
             if (PopData->getCode() == 0) *fout << "00";
-            *fout << PopData->getCode() << "/" << PopData->getAuthor() << "/" << 
-            PopData->getYear() << "/" << PopData->getLoanCount() << "\n";
+            *fout << PopData->getCode() << "/" << PopData->getAuthor() << "/" <<
+                PopData->getYear() << "/" << PopData->getLoanCount() << "\n";
         }
         *fout << "========================\n\n";
 

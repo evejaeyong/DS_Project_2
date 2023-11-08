@@ -33,7 +33,7 @@ void LoanBookHeap::heapifyUp(LoanBookHeapNode* pN) {
             }
         }
     }
-    
+
 
     if (s.top() == 0) {             //Insert Node
         node->setLeftChild(pN);
@@ -70,7 +70,7 @@ void LoanBookHeap::heapifyDown(LoanBookHeapNode* pN) {
     delete pN;
 
     LoanBookHeapNode* node = root;
-    while (1) {                                 //Sort
+    while (node) {                                 //Sort
         string name = node->getBookData()->getName();
         if (node->getLeftChild() == NULL) break;
         else if (node->getLeftChild()->getBookData()->getName() < name) {
@@ -114,12 +114,12 @@ LoanBookData* LoanBookHeap::Delete() {
         int num = s.top();
         if (num == 0) {
             node = node->getLeftChild();
-            s.pop(); 
+            s.pop();
         }
         else {
             node = node->getRightChild();
             s.pop();
-        }    
+        }
     }
     heapifyDown(node);
     return Data;

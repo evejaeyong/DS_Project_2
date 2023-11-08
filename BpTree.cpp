@@ -230,13 +230,21 @@ bool BpTree::searchRange(string start, string end) {
 			pCur = next;							//set next
 		}
 	}
-	
-	bool ch = false;								//if no data
-	for (auto iter : *pCur->getDataMap()) {
-		if (iter.first[0] >= start[0] && iter.first[0] <= end[0]) {
-			ch = true;
+
+	BpTreeNode* pCheck = pCur;
+	bool ch = false;								//if can't find data
+	while (pCheck) {
+		for (auto iter : *pCheck->getDataMap()) {
+			if (iter.first[0] > end[0]) break;
+			else if (iter.first[0] >= start[0]) {
+				ch = true;
+			}
 		}
+		pCheck = pCheck->getNext();
+		if (pCheck->getDataMap()->begin()->first[0] > end[0]) break;
+		if (ch) break;
 	}
+	
 	if (!ch) return false;
 
 	*fout << "========SEARCH_BP========\n";

@@ -3,10 +3,10 @@ lllll	000	lll	1999	0
 kkkkk	100	kkk	1999	0
 mmmmm	600	mmm	1999	0
 vvvvv	700	vvv	1999	0
-jjjjj	100	jjj	1999	0
+jjjjj	100	jjj	1999	2
 ttttt	300	ttt	1999	0
 qqqqq	700	qqq	1999	0
-rrrrr	100	rrr	1999	0
+rrrrr	100	rrr	1999	2
 wwwww	300	www	1999	0
 hhhhh	500	hhh	1999	0
 fffff	700	fff	1999	0
@@ -18,7 +18,7 @@ ddddd	200	ddd	1999	0
 iiiii	700	iii	1999	0
 ggggg	500	ggg	1999	0
 aaaaa	100	aaa	1999	0
-bbbbb	100	bbb	1999	0
+bbbbb	100	bbb	1999	2
 yyyyy	000	yyy	1999	0
 eeeee	000	eee	1999	0
 ccccc	200	ccc	1999	0
