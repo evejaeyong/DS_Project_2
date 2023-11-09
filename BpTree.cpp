@@ -297,3 +297,22 @@ void BpTree::DeleteData(string name) {
 
 	stree->Insert(data);
 }
+
+void BpTree::Destruct(BpTreeNode* delNode) {
+	if (delNode == NULL) return;
+	if (delNode->getMostLeftChild()) {
+		Destruct(delNode->getMostLeftChild());
+		while (delNode->getIndexMap()->size()) {
+			Destruct(delNode->getIndexMap()->begin()->second);
+			delNode->deleteMap(delNode->getIndexMap()->begin()->first);
+		}
+	}
+	else {
+		while (delNode->getDataMap()->size()) {
+			delete delNode->getDataMap()->begin()->second;
+			delNode->deleteMap(delNode->getDataMap()->begin()->first);
+		}
+	}
+	
+	delete delNode;
+}

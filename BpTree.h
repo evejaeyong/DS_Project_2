@@ -24,7 +24,7 @@ public:
 	}
 	
 	~BpTree() {
-		//아 이거 어케 구현하지?
+		Destruct(root);
 	}
 
 	/* essential */
@@ -42,6 +42,7 @@ public:
 	void SetSTree(SelectionTree* stree) { this->stree = stree; }
 	bool PrintBook();
 	void DeleteData(string name);
+	void Destruct(BpTreeNode* delNode);
 };
 
 #endif

@@ -86,7 +86,8 @@ bool SelectionTree::Delete() {
             node->setBookData(NULL);
 
             if (node->getHeap()) {              //Heap Delete
-                node->getHeap()->Delete();
+                LoanBookData* delNode = node->getHeap()->Delete();
+                delete delNode;
                 if (node->getHeap()->getRoot()) node->setBookData(node->getHeap()->getRoot()->getBookData());
 
                 SelectionTreeNode* Parant = node->getParent();
