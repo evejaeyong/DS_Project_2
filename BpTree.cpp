@@ -290,26 +290,24 @@ bool BpTree::PrintBook() {
 
 void BpTree::DeleteData(string name) {
 	BpTreeNode* delNode = searchDataNode(name);
-	LoanBookData* data = delNode->getDataMap()->find(name)->second;
-	delNode->getDataMap()->erase(name);
-	//딜리트 전체 추가해야 함
-
-
-	stree->Insert(data);
+	LoanBookData* data = delNode->getDataMap()->find(name)->second;	//Get Data
+	delNode->getDataMap()->erase(name);								//Data Delete
+	
+	stree->Insert(data);		//Data insert to Selection Tree
 }
 
 void BpTree::Destruct(BpTreeNode* delNode) {
 	if (delNode == NULL) return;
-	if (delNode->getMostLeftChild()) {
+	if (delNode->getMostLeftChild()) {				//Delete Index Node
 		Destruct(delNode->getMostLeftChild());
 		while (delNode->getIndexMap()->size()) {
 			Destruct(delNode->getIndexMap()->begin()->second);
 			delNode->deleteMap(delNode->getIndexMap()->begin()->first);
 		}
 	}
-	else {
+	else {											//Delete Data Node
 		while (delNode->getDataMap()->size()) {
-			delete delNode->getDataMap()->begin()->second;
+			delete delNode->getDataMap()->begin()->second;		//delete LoanBookData
 			delNode->deleteMap(delNode->getDataMap()->begin()->first);
 		}
 	}
