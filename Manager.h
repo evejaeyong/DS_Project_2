@@ -10,7 +10,7 @@ private:
 
 public:
 	Manager(int bpOrder) {		//constructor
-		flog.open("log.txt");
+		flog.open("log.txt", ios::app);
 		bptree = new BpTree(&flog, bpOrder);
 		stree = new SelectionTree(&flog);
 		bptree->SetSTree(stree);
